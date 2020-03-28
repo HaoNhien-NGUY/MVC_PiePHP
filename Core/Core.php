@@ -6,8 +6,8 @@ class Core
 {
     public function run()
     {
-        require_once './src/routes.php';
-        if ($route = Router::get($_SERVER["REQUEST_URI"])) {
+        require_once(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'src', 'routes.php']));
+        if ($route = Router::get(substr( $_SERVER["REQUEST_URI"] , strlen(BASE_URI)))) {
             $ctrl = "Controller\\" . ucfirst($route['controller'])."Controller";
             $method = $route['action'] . "Action";  
             $ctrl = new $ctrl();

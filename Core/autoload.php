@@ -3,9 +3,9 @@
 namespace Core;
 
 spl_autoload_register(function($className){
-    $fullPath = str_replace("\\", "/", $className . ".php");
+    $fullPath = str_replace("\\", DIRECTORY_SEPARATOR, $className . ".php");
     if(!file_exists($fullPath)){
-        $fullPath = "./src/" . $fullPath;
+        $fullPath = implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'src', $fullPath]);
         if(!file_exists($fullPath)){
             return false;
         }
