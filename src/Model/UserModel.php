@@ -2,7 +2,9 @@
 
 namespace Model;
 
-class UserModel
+use Core\Controller;
+
+class UserModel extends Controller
 {
 
 }

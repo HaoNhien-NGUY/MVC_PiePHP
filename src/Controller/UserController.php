@@ -2,11 +2,13 @@
 
 namespace Controller;
 
-class UserController
+use Core\Controller;
+
+class UserController extends Controller
 {
     function __construct()
     {
-        echo "<h2>" . __CLASS__ . " intanced</h2>";
+        echo "<h2>" . __CLASS__ . " instanced</h2>";
     }
 
     public function addAction(){
