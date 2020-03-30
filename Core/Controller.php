@@ -4,8 +4,7 @@ namespace Core;
 
 class Controller
 {
-
-    protected $_render;
+    protected static $_render;
 
     protected function render($view, $scope = [])
     {

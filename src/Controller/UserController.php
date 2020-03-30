@@ -18,5 +18,9 @@ class UserController extends Controller
     public function indexAction(){
         echo __METHOD__;
     }
+
+    public function registerAction(){
+        
+    }
     
 }
