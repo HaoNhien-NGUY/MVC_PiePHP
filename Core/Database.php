@@ -4,14 +4,14 @@ namespace Core;
 use PDO;
 
 class Database {
-    private $dbhost = "127.0.0.1";
-    private $dbuser = "root";
-    private $dbpass = "kappa123";
-    private $dbname = 'MVC_PiePHP';
+    private static $dbhost = "127.0.0.1";
+    private static $dbuser = "root";
+    private static $dbpass = "kappa123";
+    private static $dbname = 'MVC_PiePHP';
 
-    protected function OpenCon()
+    public static function OpenCon()
     {
-        $conn = new PDO('mysql:host='.$this->dbhost.';dbname='.$this->dbname.';charset=utf8mb4', $this->dbuser, $this->dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)) or die("Connect failed: %s\n". $conn -> error);
+        $conn = new PDO('mysql:host='.self::$dbhost.';dbname='.self::$dbname.';charset=utf8mb4', self::$dbuser, self::$dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)) or die("Connect failed: %s\n". $conn -> error);
         return $conn;
     }
 }

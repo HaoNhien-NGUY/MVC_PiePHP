@@ -2,11 +2,11 @@
 
 namespace Core;
 
-use PDO;
+// use PDO;
 
-class ORM extends Database
+class ORM
 {
-    public function create($table, $fields)
+    public static function create($table, $fields)
     {
         $executeArray = [];
         $values = '';
@@ -19,22 +19,22 @@ class ORM extends Database
         }
         $query = substr($query, 0, -2) . ") VALUES (" . substr($values, 0, -2) . ")";
 
-        $conn = $this->OpenCon();
+        $conn = Database::OpenCon();
         $req = $conn->prepare($query);
         $req->execute($executeArray);
         return $conn->lastInsertId();
     }
 
-    public function read($table, $id)
+    public static function read($table, $id)
     {
         $query = "SELECT * FROM $table WHERE id = ?";
 
-        $req = $this->OpenCon()->prepare($query);
+        $req = Database::OpenCon()->prepare($query);
         $req->execute([$id]);
-        return $req->fetch(PDO::FETCH_ASSOC);
+        return $req->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function update($table, $id, $fields)
+    public static function update($table, $id, $fields)
     {
         $executeArray = [];
 
@@ -46,39 +46,48 @@ class ORM extends Database
         $query = substr($query, 0, -2) . "WHERE id = ?";
         array_push($executeArray, $id);
 
-        $req = $this->OpenCon()->prepare($query);
+        $req = Database::OpenCon()->prepare($query);
         return $req->execute($executeArray);
     }
 
-    public function delete($table, $id)
+    public static function delete($table, $id)
     {
         $executeArray = [];
 
         $query = "DELETE FROM " . $table . " WHERE id = ?";
         array_push($executeArray, $id);
 
-        $req = $this->OpenCon()->prepare($query);
+        $req = Database::OpenCon()->prepare($query);
         return $req->execute($executeArray);
     }
 
-    public function find($table, $params = ['WHERE' => '', 'ORDER BY' => 'id ASC', 'LIMIT' => ''])
+    //ORM::find('users', ['email' => 'golf@epitech.eu', 'id' => ['AND', '9'], ['ORDER BY' => 'id ASC', 'LIMIT' => '']);
+    public static function find($table, $conditions = null, $params = ['ORDER BY' => 'id ASC', 'LIMIT' => ''])
     {
         $query = "SELECT * FROM $table ";
         $executeArray = [];
 
-        foreach($params as $key => $val){
-            if(!empty($val)){
-                if($key == 'WHERE'){
-                    $query .= 'WHERE id = ? ';
-                    $executeArray = [$val];
-                }else{
-                    $query .= "$key $val ";
+        if ($conditions != null) {
+            $query .= "WHERE ";
+            foreach ($conditions as $key => $value) {
+                if (!is_array($value)) {
+                    $query .= $key . ' = ? ';
+                    array_push($executeArray, $value);
+                } else {
+                    $query .=  $value[0] . ' ' . $key . ' = ? ';
+                    array_push($executeArray, $value[1]);
                 }
             }
         }
 
-        $req = $this->OpenCon()->prepare($query);
+        foreach ($params as $key => $val) {
+            if (!empty($val)) {
+                $query .= "$key $val ";
+            }
+        }
+
+        $req = Database::OpenCon()->prepare($query);
         $req->execute($executeArray);
-        return $req->fetchAll(PDO::FETCH_ASSOC);
+        return $req->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

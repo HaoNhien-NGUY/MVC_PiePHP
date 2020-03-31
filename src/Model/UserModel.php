@@ -12,10 +12,10 @@ class UserModel
 
     function __construct()
     {
-        $this->orm = new ORM();
     }
 
-    public function save(){
-        $this->orm->create('users', ['email' => $this->email, 'password' => $this->password]);
+    public function save()
+    {
+        var_dump(ORM::find('users', null, ['ORDER BY' => 'id ASC', 'LIMIT' => '']));
     }
 }
