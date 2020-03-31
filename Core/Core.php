@@ -8,14 +8,13 @@ class Core
     {
         require_once(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'src', 'routes.php']));
 
-        if ($route = Router::get(substr( $_SERVER["REQUEST_URI"] , strlen(BASE_URI)))) {
-            $ctrl = "Controller\\" . ucfirst($route['controller'])."Controller";
-            $method = $route['action'] . "Action";  
+        if ($route = Router::get(substr($_SERVER["REQUEST_URI"], strlen(BASE_URI)))) {
+            $ctrl = "Controller\\" . ucfirst($route['controller']) . "Controller";
+            $method = $route['action'] . "Action";
             $ctrl = new $ctrl();
             $ctrl->$method();
-        }
-        else{
-            $pathArray = explode("/", $_SERVER["REQUEST_URI"]);
+        } else {
+            $pathArray = explode(DIRECTORY_SEPARATOR, $_SERVER["REQUEST_URI"]);
             if (class_exists($ctrl = "Controller\\" . ucfirst($pathArray[2]) . "Controller")) {
                 $ctrl = new $ctrl();
                 if (!array_key_exists(3, $pathArray) || $pathArray[3] == "") {

@@ -2,8 +2,6 @@
 
 namespace Core;
 
-// use PDO;
-
 class ORM
 {
     public static function create($table, $fields)
@@ -52,20 +50,17 @@ class ORM
 
     public static function delete($table, $id)
     {
-        $executeArray = [];
-
         $query = "DELETE FROM " . $table . " WHERE id = ?";
-        array_push($executeArray, $id);
-
+        $executeArray = [$id];
         $req = Database::OpenCon()->prepare($query);
         return $req->execute($executeArray);
     }
 
-    //ORM::find('users', ['email' => 'golf@epitech.eu', 'id' => ['AND', '9'], ['ORDER BY' => 'id ASC', 'LIMIT' => '']);
+    //ORM::find('users', ['email' => 'golf@epitech.eu', 'id' => [9, 'AND'], ['ORDER BY' => 'id ASC', 'LIMIT' => '']);
     public static function find($table, $conditions = null, $params = ['ORDER BY' => 'id ASC', 'LIMIT' => ''])
     {
-        $query = "SELECT * FROM $table ";
         $executeArray = [];
+        $query = "SELECT * FROM $table ";
 
         if ($conditions != null) {
             $query .= "WHERE ";
@@ -74,8 +69,8 @@ class ORM
                     $query .= $key . ' = ? ';
                     array_push($executeArray, $value);
                 } else {
-                    $query .=  $value[0] . ' ' . $key . ' = ? ';
-                    array_push($executeArray, $value[1]);
+                    $query .=  $value[1] . ' ' . $key . ' = ? ';
+                    array_push($executeArray, $value[0]);
                 }
             }
         }
@@ -86,6 +81,7 @@ class ORM
             }
         }
 
+        echo $query;
         $req = Database::OpenCon()->prepare($query);
         $req->execute($executeArray);
         return $req->fetchAll(\PDO::FETCH_ASSOC);

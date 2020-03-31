@@ -8,14 +8,19 @@ class UserModel
 {
     private $email;
     private $password;
-    private $orm;
 
-    function __construct()
+    public function setEmail($email)
     {
+        $this->email = $email;
+    }
+
+    public function setPassword($pwd)
+    {
+        $this->password = $pwd;
     }
 
     public function save()
     {
-        var_dump(ORM::find('users', null, ['ORDER BY' => 'id ASC', 'LIMIT' => '']));
+        ORM::create('users', ['email' => $this->email, 'password' => $this->password]);
     }
 }
