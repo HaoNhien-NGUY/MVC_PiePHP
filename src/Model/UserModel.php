@@ -2,9 +2,10 @@
 
 namespace Model;
 
+use Core\Entity;
 use Core\ORM;
 
-class UserModel
+class UserModel extends Entity
 {
     private $email;
     private $password;
@@ -21,6 +22,16 @@ class UserModel
 
     public function save()
     {
-        ORM::create('users', ['email' => $this->email, 'password' => $this->password]);
+        return ORM::create('users', ['email' => $this->email, 'password' => $this->password]);
+    }
+
+    public function read($id)
+    {
+        return ORM::find('users', $id);
+    }
+
+    public function read_all()
+    {
+        return ORM::find('users', null);
     }
 }

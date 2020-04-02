@@ -17,17 +17,14 @@ class UserController extends Controller
     }
 
     public function registerAction(){
-        $model = new UserModel();
-
+        
         $this->render('register');
-
-        var_dump($this->request->params);
-
-        if((isset($_POST['email']) && $_POST['email'] != '') && (isset($_POST['password']) && $_POST['password'] != '')){
-            $model->setEmail($_POST['email']);
-            $model->setPassword($_POST['password']);
+        
+        if($req_params = $this->request->getQueryParams()){
+            $model = new UserModel($req_params);
+            // $model->setEmail($req_params['email']);
+            // $model->setPassword($req_params['password']);
             $model->save();
         }
     }
-    
 }
