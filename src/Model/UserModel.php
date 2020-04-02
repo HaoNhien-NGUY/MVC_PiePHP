@@ -19,19 +19,4 @@ class UserModel extends Entity
     {
         $this->password = $pwd;
     }
-
-    public function save()
-    {
-        return ORM::create('users', ['email' => $this->email, 'password' => $this->password]);
-    }
-
-    public function read($id)
-    {
-        return ORM::find('users', $id);
-    }
-
-    public function read_all()
-    {
-        return ORM::find('users', null);
-    }
 }

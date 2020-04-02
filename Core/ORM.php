@@ -81,7 +81,6 @@ class ORM
             }
         }
 
-        echo $query;
         $req = Database::OpenCon()->prepare($query);
         $req->execute($executeArray);
         return $req->fetchAll(\PDO::FETCH_ASSOC);
