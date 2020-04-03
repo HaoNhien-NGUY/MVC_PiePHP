@@ -28,6 +28,15 @@ class UserController extends Controller
             $model->create();
         }else{
             $model = new UserModel();
+            // echo "<pre>";
+            // $tabs = ($model->read_all());
+            // // var_dump($tabs);
+            // foreach($tabs as $k => $v){
+            //     // var_dump($v['id']);
+            //     $testab[] = $v['id'];
+            // }
+            // var_dump($testab);
+            // echo "</pre>";
         }
     }
 }
