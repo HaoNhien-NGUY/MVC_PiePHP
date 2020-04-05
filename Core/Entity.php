@@ -4,7 +4,7 @@ namespace Core;
 
 class Entity
 {
-    private $params;
+    protected $params;
     private $table;
 
     function __construct($params = null)
@@ -25,15 +25,26 @@ class Entity
             }
         }
 
-        if (isset($this->relation['many'])) {
-            foreach($this->relation['many'] as $table => $rel) {
-                $modelName = substr($table, 0, -1) . "Model";
-                $fetch = ORM::find($table, [$rel => $this->id]);
-                foreach($fetch as $value){
-                    $this->$table[] = new $modelName($value['id']);
+        if(isset($this->id)){
+            if (isset($this->relation['many'])) {
+                foreach($this->relation['many'] as $rel_tab => $rel) {
+                    $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
+                    $fetch = ORM::find($rel_tab, [$rel => $this->id]);
+                    foreach($fetch as $value){
+                        $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
+                    }
                 }
             }
+            // if (isset($this->relation['one'])) {
+            //     $rel_one = $this->relation['one'];
+            //     $modelName = 'Model\\' . ucfirst(substr($rel_one[0], 0, -1)) . "Model";
+            //     $fetch = ORM::find($rel_tab, [$rel => $this->id]);
+            //     foreach($fetch as $value){
+            //         $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
+            //     }
+            // }
         }
+
     }
 
     public function create()
@@ -53,7 +64,7 @@ class Entity
 
     public function read()
     {
-        return ORM::find($this->table, $this->id);
+        return ORM::read($this->table, $this->id);
     }
 
     public function read_all()

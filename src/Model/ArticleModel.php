@@ -6,7 +6,11 @@ use Core\Entity;
 
 class ArticleModel extends Entity
 {
-    private static $relation = [
-        'many' => ['comments' => 'article_id', 'tags' => 'article_id'],
-        'one' => ['users' => 'article_id']];
+
+    public function testMethod()
+    {
+        echo "<h1>BONJOUR</h1>";
+        return true;
+    }
+
 }

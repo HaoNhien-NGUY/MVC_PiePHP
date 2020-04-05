@@ -15,7 +15,9 @@ class UserController extends Controller
     public function indexAction()
     {
         echo __METHOD__;
-        $this->render('index');
+        $model = new UserModel();
+        $model->read_all();
+        $this->render('index', ['users' => $model->read_all()]);
     }
 
     public function registerAction()
@@ -25,18 +27,12 @@ class UserController extends Controller
 
         if ($req_params = $this->request->getQueryParams()) {
             $model = new UserModel($req_params);
-            $model->create();
+            // $model->create();
         }else{
-            $model = new UserModel();
-            // echo "<pre>";
-            // $tabs = ($model->read_all());
-            // // var_dump($tabs);
-            // foreach($tabs as $k => $v){
-            //     // var_dump($v['id']);
-            //     $testab[] = $v['id'];
-            // }
-            // var_dump($testab);
-            // echo "</pre>";
+            $model = new UserModel(['id' => 22]);
+            echo "<pre>";
+            var_dump($model->articles);
+            echo "</pre>";
         }
     }
 }
