@@ -28,11 +28,16 @@ class UserController extends Controller
         if ($req_params = $this->request->getQueryParams()) {
             $model = new UserModel($req_params);
             // $model->create();
-        }else{
+        } else {
             $model = new UserModel(['id' => 22]);
             echo "<pre>";
             var_dump($model->articles);
             echo "</pre>";
         }
+    }
+
+    public function showAction($id)
+    {
+        echo $id;
     }
 }
