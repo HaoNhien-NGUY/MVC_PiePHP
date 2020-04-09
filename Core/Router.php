@@ -13,6 +13,13 @@ class Router
 
     public static function get($url)
     {
-        return array_key_exists(trim($url, "/"), self::$routes) ? self::$routes[trim($url, "/")] : null;
+        // return array_key_exists(trim($url, "/"), self::$routes) ? self::$routes[trim($url, "/")] : null;
+
+        if (array_key_exists(trim($url, "/"), self::$routes)) {
+            return self::$routes[trim($url, "/")];
+        } else {
+            //check regex params idk
+            //then explode url from the length of the matching string ?
+        }
     }
 }

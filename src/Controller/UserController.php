@@ -38,6 +38,6 @@ class UserController extends Controller
 
     public function showAction($id)
     {
-        echo $id;
+        echo "current user id : " . $id;
     }
 }

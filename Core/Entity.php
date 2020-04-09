@@ -43,15 +43,8 @@ class Entity
                     $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
                 }
             }
-            // if (isset($this->relation['many_to_many'])) {
-            //     foreach($this->relation['many_to_many'] as $rel_tab => $rel) {
-            //         $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
-            //         $fetch = ORM::find($rel_tab, [$rel => $this->id]);
-            //         foreach($fetch as $value){
-            //             $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
-            //         }
-            //     }
-            // }
+            if (isset($this->relation['many_many'])) {
+            }
         }
 
     }
