@@ -7,6 +7,6 @@ use Core\Entity;
 class TagModel extends Entity
 {
 
-    protected $relation = ['many_many' => ['articles' => 'user_id']];
+    // protected $relation = ['many_many' => ['articles' => 'article_id']];
 
 }

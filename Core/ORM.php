@@ -23,12 +23,26 @@ class ORM
         return $conn->lastInsertId();
     }
 
-    public static function read($table, $id)
+    public static function read($table, $conditions)
     {
-        $query = "SELECT * FROM $table WHERE id = ?";
+        $executeArray = [];
+        $query = "SELECT * FROM $table ";
+
+        if ($conditions != null) {
+            $query .= "WHERE ";
+            foreach ($conditions as $key => $value) {
+                if (!is_array($value)) {
+                    $query .= $key . ' = ? ';
+                    array_push($executeArray, $value);
+                } else {
+                    $query .=  $value[1] . ' ' . $key . ' = ? ';
+                    array_push($executeArray, $value[0]);
+                }
+            }
+        }
 
         $req = Database::OpenCon()->prepare($query);
-        $req->execute([$id]);
+        $req->execute($executeArray);
         return $req->fetch(\PDO::FETCH_ASSOC);
     }
 

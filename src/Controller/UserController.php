@@ -31,7 +31,8 @@ class UserController extends Controller
         } else {
             $model = new UserModel(['id' => 22]);
             echo "<pre>";
-            var_dump($model->articles);
+            var_dump($model->articles[0]->tags);
+            // var_dump($GLOBALS['model_rel']);
             echo "</pre>";
         }
     }
