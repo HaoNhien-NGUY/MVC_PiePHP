@@ -7,6 +7,6 @@ use Core\Entity;
 class UserModel extends Entity
 {
 
-    protected $relation = ['many' => ['articles' => 'user_id'], 'one' => ['table' => 'promos', 'rel' => 'promo_id']];
+    protected $relation = ['many' => ['articles' => 'user_id'], 'one' => ['promos' => 'promo_id']];
 
 }

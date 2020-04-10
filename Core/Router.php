@@ -24,7 +24,7 @@ class Router
             //or
             //explode both path
             //array_diff
-            //if diff == {something}
+            //if diff == {something}  preg_match -> substr($str, 1 , -1)
             //etc ...
         }
     }

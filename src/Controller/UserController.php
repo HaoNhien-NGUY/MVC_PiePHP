@@ -34,8 +34,11 @@ class UserController extends Controller
             // var_dump($model->articles);
             // var_dump($GLOBALS['rel_routes']);
             $model->getArticles();
+            // var_dump($model->getPromos());
+            
+            // var_dump($model->promos->name);
             var_dump($model->articles[1]->getTags());
-            var_dump($model->articles[1]->tags);
+            // var_dump($model->articles[1]->tags[1]->name);
             echo "</pre>";
         }
     }
