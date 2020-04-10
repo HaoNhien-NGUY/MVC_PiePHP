@@ -6,6 +6,7 @@ class Entity
 {
     protected $params;
     private $table;
+    // $GLOBALS['model_rel'][] = $this->table;
 
     function __construct($params = null)
     {
@@ -59,7 +60,6 @@ class Entity
             }
         }
 
-        // $GLOBALS['model_rel'][] = $this->table;
     }
     
     public function create()
