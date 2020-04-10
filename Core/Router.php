@@ -20,6 +20,12 @@ class Router
         } else {
             //check regex params idk
             //then explode url from the length of the matching string ?
+
+            //or
+            //explode both path
+            //array_diff
+            //if diff == {something}
+            //etc ...
         }
     }
 }
