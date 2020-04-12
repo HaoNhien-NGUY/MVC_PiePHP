@@ -67,7 +67,8 @@ class ORM
         $query = "DELETE FROM " . $table . " WHERE id = ?";
         $executeArray = [$id];
         $req = Database::OpenCon()->prepare($query);
-        return $req->execute($executeArray);
+        $req->execute($executeArray);
+        return $req->rowCount();
     }
 
     //ORM::find('users', ['email' => 'golf@epitech.eu', 'id' => [9, 'AND'], ['ORDER BY' => 'id ASC', 'LIMIT' => '']);

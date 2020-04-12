@@ -1,26 +1,24 @@
-<form id="registerform" method="post" enctype="multipart/form-data" action="/MVC_PiePHP/user/register">
-    <div><label for="email">email</label><input type="text" name="email" id="email" autocomplete="off" /></div>
-    <div><label for="password">password</label><input type="password" name="password" id="password" autocomplete="off" /></div>
-    <button id="registerbtn">Register</button>
-</form>
-
-
-@if ($test2 == 'can i chain?')
-<h4>it works</h4>
-@elseif (1)
-<h4>elseif</h4>
-@endif
-
-@if(1)
-<h3>deuxieme if</h3>
-@endif
-
-@isset($test)
-<p>isset test</p>
-@endisset
-
-@isset($test2)
-<p>isset 2 test</p>
-@endisset
-<p>{{$test}}</p>
-<h1>{{$test2}}</h1>
+<div class="container">
+    <h1 class="text-center pb-5">Register to My_Cinema :)</h1>
+    @isset($error)
+    <h3 class="text-center text-danger">{{$error}}</h3>
+    @endisset
+    <form class="mx-5" id="registerform" method="post" enctype="multipart/form-data" action="/MVC_PiePHP/user/register">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" autocomplete="off" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" autocomplete="off" aria-describedby="emailHelp" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Select your promo</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="promo_id">
+                <option value="2">Promo 2020</option>
+                <option value="1">Promo 2021</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="registerbtn">Register</button>
+    </form>
+</div>

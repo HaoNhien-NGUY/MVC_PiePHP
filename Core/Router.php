@@ -15,7 +15,7 @@ class Router
     {
         if (isset(self::$routes[trim($url, "/")])) {
             return self::$routes[trim($url, "/")];
-        } else {
+        } else if(is_array(self::$routes)) {
             $urlArray = explode('/', trim($url, "/"));
             foreach (self::$routes as $urlRoute => $v) {
                 $paramsName = array_diff(explode('/', $urlRoute), $urlArray);

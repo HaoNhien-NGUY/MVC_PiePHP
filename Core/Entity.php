@@ -4,8 +4,9 @@ namespace Core;
 
 class Entity
 {
-    protected $params;
+    public $params;
     private $table;
+    public $exists;
 
     function __construct($params = null)
     {
@@ -15,8 +16,13 @@ class Entity
         if ($params != null) {
             if (array_key_exists('id', $params)) {
                 $this->id = $params['id'];
-                foreach ($this->read() as $key => $val) {
-                    $this->$key = $val;
+                if($fetch = $this->read()) {
+                    $this->exists = true;
+                    foreach ($fetch as $key => $val) {
+                        $this->$key = $val;
+                    }
+                } else {
+                    $this->exists = false;
                 }
             } else {
                 foreach ($params as $key => $val) {
@@ -49,6 +55,11 @@ class Entity
     public function read_all()
     {
         return ORM::find($this->table, null);
+    }
+
+    public function exists($cond)
+    {
+        return ORM::read($this->table, $cond);
     }
 
     //dynamically "create" get methods (getArticles...)

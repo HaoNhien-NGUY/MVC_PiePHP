@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-
-<html lang="fr">
-
-<head>
-    <meta charset="utf-8">
-    <title>myMeat</title>
-    <meta name="description" content="Vous allez aimer le Ciné" />
-    <link href="./style/haoFramework.css" type="text/css" rel="stylesheet">
-    <link href="./style/style.css" type="text/css" rel="stylesheet">
-</head>
-<script src="./javascript/login.js"></script>
-
-<body>
-    <main>
-        <form id="loginform" method="post" enctype="multipart/form-data" action="/MVC_PiePHP/index.php">
-            <div><label for="email">email</label><input type="text" name="email" id="email" autocomplete="off" /></div>
-            <div><label for="password">password</label><input type="password" name="password" id="password" autocomplete="off" /></div>
-            <button id="loginbtn">login</button>
-        </form>
-    </main>
-</body>
-
-</html>
+<div class="container">
+    <h1 class="text-center pb-5">Login to My_Cinema</h1>
+    @isset($error)
+    <h3 class="text-center text-danger">{{$error}}</h3>
+    @endisset
+    <form class="mx-5" id="registerform" method="post" enctype="multipart/form-data" action="/MVC_PiePHP/user/login">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" autocomplete="off" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" autocomplete="off" aria-describedby="emailHelp" placeholder="Password">
+        </div>
+        <button class="btn btn-primary" id="registerbtn">Login</button>
+    </form>
+</div>

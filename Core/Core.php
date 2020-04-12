@@ -23,10 +23,12 @@ class Core
                 } else if (method_exists($ctrl, $method = $pathArray[3] . "Action")) {
                     $ctrl->$method();
                 } else {
-                    echo "<h1>404</h1>";
+                    $ctrl = new \Controller\AppController();
+                    $ctrl->errorAction();
                 }
             } else {
-                echo "<h1>404</h1>";
+                $ctrl = new \Controller\AppController();
+                $ctrl->errorAction();
             }
         }
     }
