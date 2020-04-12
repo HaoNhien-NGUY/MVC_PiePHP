@@ -24,6 +24,12 @@ class AppController extends Controller
 
     public function errorAction()
     {
-        $this->render('error');
+        if(isset($_SESSION['id'])) {
+            $user = new UserModel(['id' => $_SESSION['id']]);
+            $email = $user->email;
+            $this->render('error', ['email' => $email]);
+        } else { 
+            $this->render('error');
+        }
     }
 }

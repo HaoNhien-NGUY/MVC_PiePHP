@@ -29,9 +29,12 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mr-3 my-0">
-                    @isset($_SESSION['id'])
+                    @isset($email)
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="/MVC_PiePHP/user/profile/{{$_SESSION['id']}}">{{$email}}</a>
+                    </li>
                     <li class="nav-item">
-                        <form action="/MVC_PiePHP/#" method="post">
+                        <form action="/MVC_PiePHP/" method="post">
                             <input type="hidden" name="logout">
                             <button class="btn btn-outline-danger" type="submit">Logout</button>
                         </form>

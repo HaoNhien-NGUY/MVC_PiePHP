@@ -18,10 +18,10 @@
             <a class="navbar-brand" href="/MVC_PiePHP/">My_cinema</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link" href="/MVC_PiePHP/">Home<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/MVC_PiePHP/film">Films</a>
                     </li>
                     <li class="nav-item ">
@@ -29,9 +29,12 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mr-3 my-0">
-                    <?php if(isset($_SESSION['id'])): ?>
+                    <?php if(isset($email)): ?>
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="/MVC_PiePHP/user/profile/<?=htmlentities($_SESSION['id']); ?>"><?=htmlentities($email); ?></a>
+                    </li>
                     <li class="nav-item">
-                        <form action="/MVC_PiePHP/#" method="post">
+                        <form action="/MVC_PiePHP/" method="post">
                             <input type="hidden" name="logout">
                             <button class="btn btn-outline-danger" type="submit">Logout</button>
                         </form>
@@ -54,38 +57,9 @@
     </header>
 
     <div class="container">
-
-
-    <?php if(isset($email)): ?>
-    <h1 class="text-primary text-center">WELCOME <?=htmlentities($email); ?></h1>
-    <?php endif; ?>
-
-    <?php if ($test2 == 'can i chain??'): ?>
-    <h4>it works</h4>
-    <?php else: ?>
-    <h4>else works</h4>
-    <?php endif; ?>
-
-    <?php if(1): ?>
-    <h3>deuxieme if</h3>
-    <?php endif; ?>
-
-    <?php if(isset($test)): ?>
-    <p>isset test</p>
-    <?php endif; ?>
-
-    <?php if(isset($test2)): ?>
-    <p>isset 2 test</p>
-    <?php endif; ?>
-    <p><?=htmlentities($test); ?></p>
-    <h1><?=htmlentities($test2); ?></h1>
-
-    <?php foreach ($testarr as $words): ?>
-    <h1><?=htmlentities($words); ?></h1>
-    <?php endforeach; ?>
-
-    <?php foreach ($testarr as $words): ?>
-    <h1><?=htmlentities($words); ?></h1>
+    <?php foreach($films as $film): ?>
+    <h4>Titre : <a href="/MVC_PiePHP/film/<?=htmlentities($film['id']); ?>"><?=htmlentities($film['name']); ?></a></h4>
+    <p>Description : <?=htmlentities($film['description']); ?></p>
     <?php endforeach; ?>
 </div>
 </body>

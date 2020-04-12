@@ -7,14 +7,8 @@ use Model\UserModel;
 
 class UserController extends Controller
 {
-    public function addAction()
-    {
-        echo __METHOD__;
-    }
-
     public function indexAction()
     {
-        echo __METHOD__;
         $model = new UserModel();
         $model->read_all();
         $this->render('index', ['users' => $model->read_all()]);
@@ -69,14 +63,30 @@ class UserController extends Controller
 
     public function deleteAction()
     {
-        $model = new UserModel(['id' => 38]);
-        // $model->update();
-        var_dump($model->read());
+        if(isset($_SESSION['id'])) {
+            $model = new UserModel(['id' => $_SESSION['id']]);
+            if($model->delete()) {
+                session_destroy();
+                unset($_SESSION['id']);
+                header('Location: /MVC_PiePHP/');
+            } else {
+                $this->render('show', ['errormsg' => "An error occurred"]);
+            }
+        } else {
+            header('Location: /MVC_PiePHP/');
+        }
     }
 
     public function showAction($id, $name = null)
     {
-        echo __METHOD__;
-        echo "<h1>User ID is : " . $id . " and User name is : " . $name . "</h1>";
+        if(isset($_SESSION['id'])) {
+            $user = new UserModel(['id' => $_SESSION['id']]);
+            $email = $user->email;
+            $user->getPromos();
+            $promo = $user->promos->name;
+            $this->render('show', ['email' => $email, 'promo' => $promo]);
+        } else { 
+            $this->render('login');
+        }
     }
 }
