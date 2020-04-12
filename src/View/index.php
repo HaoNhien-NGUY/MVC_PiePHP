@@ -25,7 +25,7 @@
                         <a class="nav-link" href="/MVC_PiePHP/film">Films</a>
                     </li>
                     <li class="nav-item <?php if (substr(trim($_SERVER['REQUEST_URI'], '/'), -5) ==  'genre') echo 'active'; ?>">
-                        <a class="nav-link" href="/MVC_PiePHP/genre">Genres</a>
+                        <a class="nav-link disabled" href="/MVC_PiePHP/">Genres</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mr-3 my-0">

@@ -18,14 +18,14 @@
             <a class="navbar-brand" href="/MVC_PiePHP/">My_cinema</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item ">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/MVC_PiePHP/">Home<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link" href="/MVC_PiePHP/film">Films</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/MVC_PiePHP/genre">Genres</a>
+                        <a class="nav-link disabled" href="/MVC_PiePHP/">Genres</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mr-3 my-0">
@@ -57,10 +57,11 @@
     </header>
 
     <div class="container">
-    <?php foreach($films as $film): ?>
-    <h4>Titre : <a href="/MVC_PiePHP/film/<?=htmlentities($film['id']); ?>"><?=htmlentities($film['name']); ?></a></h4>
-    <p>Description : <?=htmlentities($film['description']); ?></p>
-    <?php endforeach; ?>
+
+    <?php if(isset($email)): ?>
+    <h1 class="text-primary text-center">WELCOME <?=htmlentities($email); ?></h1>
+    <?php endif; ?>
+
 </div>
 </body>
 
