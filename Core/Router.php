@@ -13,19 +13,31 @@ class Router
 
     public static function get($url)
     {
-        // return array_key_exists(trim($url, "/"), self::$routes) ? self::$routes[trim($url, "/")] : null;
-
-        if (array_key_exists(trim($url, "/"), self::$routes)) {
+        if (isset(self::$routes[trim($url, "/")])) {
             return self::$routes[trim($url, "/")];
         } else {
-            //check regex params idk
-            //then explode url from the length of the matching string ?
-
-            //or
-            //explode both path
-            //array_diff
-            //if diff == {something}  preg_match -> substr($str, 1 , -1)
-            //etc ...
+            $urlArray = explode('/', trim($url, "/"));
+            foreach (self::$routes as $urlRoute => $v) {
+                $paramsName = array_diff(explode('/', $urlRoute), $urlArray);
+                $paramCheck = count(preg_grep("/{[a-zA-Z0-9]+(\??)}/", $paramsName));
+                if ($paramCheck > 0 && $paramCheck == count($paramsName)) {
+                    foreach ($paramsName as $offset => $val) {
+                        if(substr($val, -2, 1) == '?') {
+                            if (isset($urlArray[$offset])) {
+                                self::$routes[$urlRoute]['params'][] = $urlArray[$offset];
+                            }
+                        } else {
+                            if (isset($urlArray[$offset])) {
+                                self::$routes[$urlRoute]['params'][] = $urlArray[$offset];
+                            } else {
+                                return null;
+                            }
+                        }
+                    }
+                    return self::$routes[$urlRoute];
+                }
+            }
         }
+        return null;
     }
 }

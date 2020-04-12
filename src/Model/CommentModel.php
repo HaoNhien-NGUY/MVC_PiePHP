@@ -6,5 +6,5 @@ use Core\Entity;
 
 class CommentModel extends Entity
 {
-    private static $relation = ['one' => ['article' => 'comment_id']];
+    protected $relation = ['one' => ['articles' => 'article_id', 'users' => 'user_id']];
 }

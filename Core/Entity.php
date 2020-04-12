@@ -6,7 +6,6 @@ class Entity
 {
     protected $params;
     private $table;
-    // private $rel_names;
 
     function __construct($params = null)
     {
@@ -24,40 +23,6 @@ class Entity
                     $this->$key = $val;
                 }
             }
-        }
-    }
-
-    public function __call($method, $arguments)
-    {
-        if (substr($method, 0, 3) == 'get' && isset($this->id)) {
-            $rel_tab = lcfirst(substr($method, 3));
-            
-            if (isset($this->relation['many'][$rel_tab])) {
-                $rel = $this->relation['many'][$rel_tab];
-                $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
-                $fetch = ORM::find($rel_tab, [$rel => $this->id]);
-                foreach ($fetch as $value) {
-                    $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
-                }
-                return true;
-            } else if (isset($this->relation['many_many'][$rel_tab])) {
-                $pivot_rel = $this->relation['many_many'][$rel_tab];
-                $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
-                $fetch = ORM::find($pivot_rel['pivot'], [$pivot_rel['rel_pivot'] => $this->id]);
-                foreach ($fetch as $fetch_res) {
-                    $this->$rel_tab[] = new $modelName(['id' => $fetch_res[$pivot_rel['rel']]]);
-                }
-                return true;
-            } else if(isset($this->relation['one'][$rel_tab])) {
-                $rel_id = $this->relation['one'][$rel_tab];
-                $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
-                $this->$rel_tab = new $modelName(['id' => $this->$rel_id]);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
     }
 
@@ -84,5 +49,48 @@ class Entity
     public function read_all()
     {
         return ORM::find($this->table, null);
+    }
+
+    //dynamically "create" get methods (getArticles...)
+    public function __call($method, $arguments)
+    {
+        if (substr($method, 0, 3) == 'get' && isset($this->id)) {
+            $rel_tab = lcfirst(substr($method, 3));
+            if (isset($this->relation['many'][$rel_tab])) {
+                $this->setInstanceMany($rel_tab, $this->relation['many'][$rel_tab]);
+                return true;
+            } else if (isset($this->relation['many_many'][$rel_tab])) {
+                $this->setInstanceManyMany($rel_tab, $this->relation['many_many'][$rel_tab]);
+                return true;
+            } else if (isset($this->relation['one'][$rel_tab])) {
+                $this->setInstanceOne($rel_tab, $this->relation['one'][$rel_tab]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function setInstanceMany($rel_tab, $rel)
+    {
+        $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
+        $fetch = ORM::find($rel_tab, [$rel => $this->id]);
+        foreach ($fetch as $value) {
+            $this->$rel_tab[] = new $modelName(['id' => $value['id']]);
+        }
+    }
+
+    private function setInstanceManyMany($rel_tab, $pivot_rel)
+    {
+        $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
+        $fetch = ORM::find($pivot_rel['pivot'], [$pivot_rel['rel_pivot'] => $this->id]);
+        foreach ($fetch as $fetch_res) {
+            $this->$rel_tab[] = new $modelName(['id' => $fetch_res[$pivot_rel['rel']]]);
+        }
+    }
+
+    private function setInstanceOne($rel_tab, $rel)
+    {
+        $modelName = 'Model\\' . ucfirst(substr($rel_tab, 0, -1)) . "Model";
+        $this->$rel_tab = new $modelName(['id' => $this->$rel]);
     }
 }

@@ -9,10 +9,11 @@ class Core
         require_once(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'src', 'routes.php']));
 
         if ($route = Router::get(substr($_SERVER["REQUEST_URI"], strlen(BASE_URI)))) {
+            isset($route['params']) ? $params = $route['params'] : $params = null;
             $ctrl = "Controller\\" . ucfirst($route['controller']) . "Controller";
             $method = $route['action'] . "Action";
             $ctrl = new $ctrl();
-            $ctrl->$method();
+            $params != null ? $ctrl->$method(...$params) : $ctrl->$method();
         } else {
             $pathArray = explode(DIRECTORY_SEPARATOR, $_SERVER["REQUEST_URI"]);
             if (class_exists($ctrl = "Controller\\" . ucfirst($pathArray[2]) . "Controller")) {
