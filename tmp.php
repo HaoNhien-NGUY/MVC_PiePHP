@@ -58,6 +58,8 @@
 
     <div class="container">
 
+    <h1 class="text-center">Homepage</h1>
+
     <?php if(isset($email)): ?>
     <h1 class="text-primary text-center">WELCOME <?=htmlentities($email); ?></h1>
     <?php endif; ?>
